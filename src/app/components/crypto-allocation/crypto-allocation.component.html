@@ -1,0 +1,18 @@
+<table class='allocation-table'>
+  <thead>
+  <tr class='header-row'>
+    <th>Crypto</th>
+    <th>Amount</th>
+    <th>Percentage</th>
+  </tr>
+  </thead>
+  <tbody>
+    <app-allocation-row *ngFor='let allocation of allocations' [cryptoAllocation]='allocation'></app-allocation-row>
+    <tr class='total-row'>
+      <td>Total</td>
+      <td>{{ getTotalAmount() }}</td>
+      <td>{{ totalPercentage }}%</td>
+    </tr>
+  </tbody>
+
+</table>
