@@ -4,13 +4,13 @@ import {CryptoAllocation} from "../../models/crypto-allocation.model";
 import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'app-crypto-allocation',
-  standalone: true,
+    selector: 'app-crypto-allocation',
+    standalone: true,
   imports: [
     AllocationRowComponent, CommonModule
   ],
-  templateUrl: './crypto-allocation.component.html',
-  styleUrl: './crypto-allocation.component.scss'
+    templateUrl: './crypto-allocation.component.html',
+    styleUrl: './crypto-allocation.component.scss'
 })
 export class CryptoAllocationComponent {
   allocations : CryptoAllocation[] = [];
@@ -22,7 +22,13 @@ export class CryptoAllocationComponent {
   }
 
   getTotalAmount(): number {
-    return this.allocations.reduce((sum, allocation) => sum + allocation.amount, 0);
+    return this.allocations.reduce((sum, allocation) => sum + Number(allocation.amount), 0);
   }
+
+  addAllocation() {
+    console.log(`allocation added, new size ${this.allocations.length}`)
+    this.allocations.push(new CryptoAllocation("", 0));
+  }
+
 
 }

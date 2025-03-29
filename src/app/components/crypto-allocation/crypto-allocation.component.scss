@@ -7,17 +7,12 @@
   gap: 1rem;
 }
 
-.header-row, .total-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .header-row {
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 .total-row {
+  font-weight: 500;
   margin-top: 10px;
   padding-top: 10px;
   border-top: 2px solid rgba(0, 0, 0, 0.1);

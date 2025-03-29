@@ -4,11 +4,11 @@ import {HomeComponent} from "./components/home/home.component";
 import {BacktestingResultComponent} from "./components/backtesting-result/backtesting-result.component";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, HomeComponent, BacktestingResultComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+    selector: 'app-root',
+    standalone: true,
+    imports: [RouterOutlet, HomeComponent, BacktestingResultComponent],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'Crypto portfolio backtester';
