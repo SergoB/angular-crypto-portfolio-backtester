@@ -17,6 +17,7 @@ export class AllocationRowComponent {
   cryptoAllocation = model.required<CryptoAllocation>();
 
   totalAmount: InputSignal<number> = input.required();
+  allocations: InputSignal<CryptoAllocation[]> = input.required();
 
   percentage = computed(() => {
     let totalAmount = this.totalAmount();
@@ -24,7 +25,4 @@ export class AllocationRowComponent {
     return Number(percentage.toFixed(2));
   })
 
-  updateCryptoName(cryptoName: string) {
-    this.cryptoAllocation().name = cryptoName;
-  }
 }

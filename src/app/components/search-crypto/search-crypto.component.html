@@ -6,11 +6,16 @@
     [(ngModel)]='selectedCrypto'
     (ngModelChange)='searchCrypto($event)'
   />
-  <ul *ngIf='filteredCrypto.length > 0 && showDropdown' class='search-dropdown'>
-    <li *ngFor='let crypto of filteredCrypto' (click)='selectCrypto(crypto)'>
-      {{ crypto }}
-    </li>
-  </ul>
-
+  @if (showDropdown) {
+    <ul class='search-dropdown'>
+      @for (crypto of filteredCrypto; track crypto) {
+        <li (click)='selectCrypto(crypto.name)'>
+          <img [src]='crypto.icon' alt='{{crypto.name}} icon' class='crypto-icon'>{{ crypto.name }}
+        </li>
+      } @empty {
+        <li>No crypto found</li>
+      }
+    </ul>
+  }
 </div>
 

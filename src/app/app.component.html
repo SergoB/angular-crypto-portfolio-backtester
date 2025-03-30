@@ -1,12 +1,8 @@
 <main class="main">
   <div class="content">
-    <div class="left-side">
-      <h1>{{ title }}</h1>
-      <app-home></app-home>
-    </div>
-    <div class="right-side">
-      <app-backtesting-result></app-backtesting-result>
-    </div>
+    <h1>{{ title }}</h1>
+    <app-crypto-allocation></app-crypto-allocation>
+    <app-backtesting-result></app-backtesting-result>
   </div>
-  <router-outlet />
+  <router-outlet/>
 </main>

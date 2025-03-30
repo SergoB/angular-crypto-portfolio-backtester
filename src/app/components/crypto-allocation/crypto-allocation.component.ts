@@ -14,10 +14,7 @@ import {CommonModule} from "@angular/common";
 })
 export class CryptoAllocationComponent {
 
-  allocations: CryptoAllocation[] = [
-    new CryptoAllocation("Bitcoin", 0),
-    new CryptoAllocation("Ethereum", 0)
-  ];
+  allocations: CryptoAllocation[] = [];
 
   totalPercentage: number = 100;
 

@@ -1,6 +1,9 @@
-import {Component, model} from '@angular/core';
+import {Component, HostListener, inject, input, InputSignal, model} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {CryptoService} from "../../services/crypto/crypto.service";
+import {CryptoAsset} from "../../models/crypto-asset.model";
+import {CryptoAllocation} from "../../models/crypto-allocation.model";
 
 @Component({
   selector: 'app-search-crypto',
@@ -11,22 +14,31 @@ import {FormsModule} from "@angular/forms";
 })
 export class SearchCryptoComponent {
 
-  cryptos = ['Bitcoin', 'Ethereum', 'Solana'];
-  filteredCrypto: string[] = [];
+  cryptoService : CryptoService = inject(CryptoService);
+  allocations: InputSignal<CryptoAllocation[]> = input.required();
+  filteredCrypto: CryptoAsset[] = [];
 
   selectedCrypto= model<string>('');
   showDropdown: boolean = false;
 
   searchCrypto(search : string) {
     this.showDropdown = true;
-    this.filteredCrypto = this.cryptos.filter(crypto => crypto.toLowerCase().includes(search.toLowerCase()));
+    let existingAllocations = this.allocations().map(allocation => allocation.name.toLowerCase());
+    this.filteredCrypto = this.cryptoService.searchCryptoByName(search, existingAllocations);
   }
-
 
   selectCrypto(crypto: string) {
     this.selectedCrypto.set(crypto);
     this.filteredCrypto = [];
     this.showDropdown = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.search-container')) {
+      this.showDropdown = false;
+    }
   }
 
 }
