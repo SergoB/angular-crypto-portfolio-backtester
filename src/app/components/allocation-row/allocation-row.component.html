@@ -1,5 +1,5 @@
 <tr class='table-row'>
-  <td>{{ cryptoAllocation().name }}</td>
-  <td><input class='amount-input' type='text' [(ngModel)]='cryptoAllocation().amount' /></td>
+  <td><app-search-crypto [(selectedCrypto)]='cryptoAllocation().name'></app-search-crypto></td>
+  <td><input class='input-field' type='text' [(ngModel)]='cryptoAllocation().amount' /></td>
   <td>{{ percentage() }}%</td>
 </tr>

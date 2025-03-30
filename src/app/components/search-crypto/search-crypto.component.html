@@ -1,1 +1,16 @@
-<input class='amount-input' type='text' placeholder='Search another crypto'>
+<div class='search-container'>
+  <input
+    class='amount-input'
+    type='text'
+    placeholder='Search another crypto'
+    [(ngModel)]='selectedCrypto'
+    (ngModelChange)='searchCrypto($event)'
+  />
+  <ul *ngIf='filteredCrypto.length > 0 && showDropdown' class='search-dropdown'>
+    <li *ngFor='let crypto of filteredCrypto' (click)='selectCrypto(crypto)'>
+      {{ crypto }}
+    </li>
+  </ul>
+
+</div>
+
