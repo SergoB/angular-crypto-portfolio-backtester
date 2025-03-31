@@ -1,0 +1,7 @@
+<div class='content'>
+  @if (crypto()) {
+    <h3>Here is some info about {{crypto()?.name}} <img [src]='crypto()?.icon' alt='{{crypto()?.name}} icon' width='40px'></h3>
+  } @else {
+    <h3>Can't load any info for this crypto</h3>
+  }
+</div>

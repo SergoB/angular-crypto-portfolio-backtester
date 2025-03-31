@@ -13,12 +13,16 @@ export class CryptoService {
     this.load();
   }
 
-  searchCryptoByName(value : string, existingAllocations: string[]) {
+  searchCryptosNotAllocatedByNameMatchingValue(value : string, existingAllocations: string[]) {
     return this.cryptos
       .filter(crypto =>
         !existingAllocations.includes(crypto.name.toLowerCase())
         && crypto.name.toLowerCase().includes(value.toLowerCase())
       );
+  }
+
+  findCryptoByName(value: string) {
+    return this.cryptos.find(crypto => crypto.name.toLowerCase() === value.toLowerCase());
   }
 
   private save() {
@@ -27,13 +31,17 @@ export class CryptoService {
   }
 
   private load() {
-    const cryptos = localStorage.getItem(this.CRYPTO_DATA_KEY);
-    if (cryptos) {
-      this.cryptos = JSON.parse(cryptos);
-      console.log(this.cryptos);
+    if (typeof localStorage !== 'undefined') {
+      const cryptos = localStorage.getItem(this.CRYPTO_DATA_KEY);
+      if (cryptos) {
+        this.cryptos = JSON.parse(cryptos);
+        console.log(this.cryptos);
+      } else {
+        this.init();
+        this.save();
+      }
     } else {
       this.init();
-      this.save();
     }
   }
 

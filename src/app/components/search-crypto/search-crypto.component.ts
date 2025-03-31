@@ -24,7 +24,7 @@ export class SearchCryptoComponent {
   searchCrypto(search : string) {
     this.showDropdown = true;
     let existingAllocations = this.allocations().map(allocation => allocation.name.toLowerCase());
-    this.filteredCrypto = this.cryptoService.searchCryptoByName(search, existingAllocations);
+    this.filteredCrypto = this.cryptoService.searchCryptosNotAllocatedByNameMatchingValue(search, existingAllocations);
   }
 
   selectCrypto(crypto: string) {
