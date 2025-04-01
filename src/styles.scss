@@ -1,12 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 main {
   display: flex;
   justify-content: center;
   padding: 1rem;
+  background-color: var(--mat-app-);
 }
 
 .content {
@@ -26,8 +30,4 @@ main {
 .table-row td, .table-row th {
   padding: 0.5rem;
   text-align: center;
-}
-
-.input-field {
-  border-radius: 4px;
 }

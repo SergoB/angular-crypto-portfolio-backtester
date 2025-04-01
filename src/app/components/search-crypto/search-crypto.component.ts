@@ -4,11 +4,13 @@ import {FormsModule} from "@angular/forms";
 import {CryptoService} from "../../services/crypto/crypto.service";
 import {CryptoAsset} from "../../models/crypto-asset.model";
 import {CryptoAllocation} from "../../models/crypto-allocation.model";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-search-crypto',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatFormField, MatInput, MatLabel],
   templateUrl: './search-crypto.component.html',
   styleUrl: './search-crypto.component.scss'
 })

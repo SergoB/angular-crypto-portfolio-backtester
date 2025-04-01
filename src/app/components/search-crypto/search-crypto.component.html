@@ -1,21 +1,23 @@
 <div class='search-container'>
-  <input
-    class='amount-input'
-    type='text'
-    placeholder='Search another crypto'
-    [(ngModel)]='selectedCrypto'
-    (ngModelChange)='searchCrypto($event)'
-  />
-  @if (showDropdown) {
-    <ul class='search-dropdown'>
-      @for (crypto of filteredCrypto; track crypto) {
-        <li (click)='selectCrypto(crypto.name)'>
-          <img [src]='crypto.icon' alt='{{crypto.name}} icon' class='crypto-icon'>{{ crypto.name }}
-        </li>
-      } @empty {
-        <li>No crypto found</li>
-      }
-    </ul>
-  }
+  <mat-form-field>
+    <mat-label>Asset</mat-label>
+    <input
+      matInput
+      type="text"
+      [(ngModel)]='selectedCrypto'
+      (ngModelChange)='searchCrypto($event)'
+    />
+    @if (showDropdown) {
+      <ul class='search-dropdown'>
+        @for (crypto of filteredCrypto; track crypto) {
+          <li (click)='selectCrypto(crypto.name)'>
+            <img [src]='crypto.icon' alt='{{crypto.name}} icon' class='crypto-icon'>{{ crypto.name }}
+          </li>
+        } @empty {
+          <li>No crypto found</li>
+        }
+      </ul>
+    }
+  </mat-form-field>
 </div>
 

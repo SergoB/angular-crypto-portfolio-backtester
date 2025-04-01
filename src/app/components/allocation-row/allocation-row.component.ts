@@ -2,13 +2,17 @@ import {Component, computed, input, InputSignal, model} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {CryptoAllocation} from "../../models/crypto-allocation.model";
 import {SearchCryptoComponent} from "../search-crypto/search-crypto.component";
+import {MatInputModule} from "@angular/material/input";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 @Component({
     selector: 'app-allocation-row',
     standalone: true,
   imports: [
     FormsModule,
-    SearchCryptoComponent
+    SearchCryptoComponent,
+    MatFormFieldModule,
+    MatInputModule,
   ],
     templateUrl: './allocation-row.component.html',
     styleUrl: './allocation-row.component.scss'
