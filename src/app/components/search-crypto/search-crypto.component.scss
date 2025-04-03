@@ -6,29 +6,15 @@
   box-sizing: border-box;
 }
 
-.search-dropdown {
-  position: relative;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  max-height: 150px;
-  overflow-y: auto;
-  font-size: 0.9rem;
-}
-
-.search-dropdown li {
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  margin: 5px 10px 0 10px;
-  align-items: center;
-}
-
-.search-dropdown li:hover {
-  background: var(--mdc-filled-text-field-container-color, var(--mat-app-surface-variant));
-}
-
 .crypto-icon {
-  width: 1.2rem;
+  width: 1.3rem;
   height: auto;
+}
+
+.option-container {
+  flex-grow:1;
+  height: 2rem;
+  display: flex;
+  gap:10px;
+  align-items: center;
 }

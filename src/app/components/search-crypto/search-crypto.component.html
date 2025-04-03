@@ -4,20 +4,19 @@
     <input
       matInput
       type="text"
-      [(ngModel)]='selectedCrypto'
-      (ngModelChange)='searchCrypto($event)'
+      [matAutocomplete]='auto'
+      [formControl]='cryptoCtrl'
     />
-    @if (showDropdown) {
-      <ul class='search-dropdown'>
-        @for (crypto of filteredCrypto; track crypto) {
-          <li (click)='selectCrypto(crypto.name)'>
-            <img [src]='crypto.icon' alt='{{crypto.name}} icon' class='crypto-icon'>{{ crypto.name }}
-          </li>
-        } @empty {
-          <li>No crypto found</li>
-        }
-      </ul>
-    }
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)='onCryptoSelected($event.option.value)'>
+      @for (crypto of filteredCrypto$ | async; track crypto) {
+        <mat-option [value]='crypto.name'>
+          <div class='option-container'>
+            <img alt="{{crypto.name}} icon" class='crypto-icon' [src]="crypto.icon">
+            <span>{{crypto.name}}</span>
+          </div>
+        </mat-option>
+      }
+    </mat-autocomplete>
   </mat-form-field>
 </div>
 

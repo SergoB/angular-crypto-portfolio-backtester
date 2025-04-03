@@ -21,6 +21,10 @@ export class CryptoService {
       );
   }
 
+  getAvailableCryptos() {
+    return this.cryptos;
+  }
+
   findCryptoByName(value: string) {
     return this.cryptos.find(crypto => crypto.name.toLowerCase() === value.toLowerCase());
   }

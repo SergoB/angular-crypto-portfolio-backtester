@@ -1,46 +1,52 @@
-import {Component, HostListener, inject, input, InputSignal, model} from '@angular/core';
+import {Component, computed, inject, input, InputSignal, model, ModelSignal} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CryptoService} from "../../services/crypto/crypto.service";
 import {CryptoAsset} from "../../models/crypto-asset.model";
-import {CryptoAllocation} from "../../models/crypto-allocation.model";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
+import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
+import {CryptoAllocation} from "../../models/crypto-allocation.model";
+import {map, Observable, startWith} from "rxjs";
 
 @Component({
   selector: 'app-search-crypto',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatFormField, MatInput, MatLabel],
+  imports: [CommonModule, FormsModule, MatFormField, MatInput, MatLabel, MatAutocompleteTrigger, ReactiveFormsModule, MatAutocomplete, MatOption],
   templateUrl: './search-crypto.component.html',
   styleUrl: './search-crypto.component.scss'
 })
 export class SearchCryptoComponent {
-
   cryptoService : CryptoService = inject(CryptoService);
+  selectedCrypto: ModelSignal<string> = model('');
+  cryptoCtrl= new FormControl(this.selectedCrypto());
+  cryptos: CryptoAsset[];
+  filteredCrypto$: Observable<CryptoAsset[]>;
+
   allocations: InputSignal<CryptoAllocation[]> = input.required();
-  filteredCrypto: CryptoAsset[] = [];
+  availableCryptos = computed(() => {
+    let alreadyAllocated = this.allocations().map(alloc => alloc.name);
+    return this.cryptos.filter(crypto => !alreadyAllocated.includes(crypto.name));
+  })
 
-  selectedCrypto= model<string>('');
-  showDropdown: boolean = false;
-
-  searchCrypto(search : string) {
-    this.showDropdown = true;
-    let existingAllocations = this.allocations().map(allocation => allocation.name.toLowerCase());
-    this.filteredCrypto = this.cryptoService.searchCryptosNotAllocatedByNameMatchingValue(search, existingAllocations);
+  constructor() {
+    this.cryptos = this.cryptoService.getAvailableCryptos();
+    this.filteredCrypto$ = this.cryptoCtrl.valueChanges.pipe(
+      startWith(''),
+      map(crypto =>
+        crypto ? this._filterCryptos(crypto) : this.availableCryptos().slice()
+      )
+    );
   }
 
-  selectCrypto(crypto: string) {
-    this.selectedCrypto.set(crypto);
-    this.filteredCrypto = [];
-    this.showDropdown = false;
+  private _filterCryptos(value: string): CryptoAsset[] {
+    return this.availableCryptos().filter(crypto =>
+      crypto.name.toLowerCase().includes(value.toLowerCase()));
   }
 
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: Event) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.search-container')) {
-      this.showDropdown = false;
-    }
+  onCryptoSelected(value: string) {
+    this.selectedCrypto.set(value);
   }
+
 
 }
