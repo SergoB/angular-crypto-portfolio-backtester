@@ -8,6 +8,7 @@ import {MatInput} from "@angular/material/input";
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
 import {CryptoAllocation} from "../../models/crypto-allocation.model";
 import {map, Observable, startWith} from "rxjs";
+import {SimulationService} from "../../services/simulation/simulation.service";
 
 @Component({
   selector: 'app-search-crypto',
@@ -17,6 +18,7 @@ import {map, Observable, startWith} from "rxjs";
   styleUrl: './search-crypto.component.scss'
 })
 export class SearchCryptoComponent {
+  simulationService : SimulationService = inject(SimulationService);
   cryptoService : CryptoService = inject(CryptoService);
   selectedCrypto: ModelSignal<string> = model('');
   cryptoCtrl= new FormControl(this.selectedCrypto());
@@ -46,6 +48,9 @@ export class SearchCryptoComponent {
 
   onCryptoSelected(value: string) {
     this.selectedCrypto.set(value);
+    this.simulationService.getCryptoProgression(value).subscribe(data => {
+      console.log(`Progress for ${value} was ${data}`)
+    })
   }
 
 
