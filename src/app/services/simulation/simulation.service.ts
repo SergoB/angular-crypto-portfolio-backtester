@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {map, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +9,23 @@ export class SimulationService {
 
   private mockDataPath = 'mock-data/';
 
-  constructor(private http: HttpClient) {}
+  private performanceCache: Map<string, BehaviorSubject<number>> = new Map();
 
-  getCryptoProgression(crypto: string): Observable<number> {
+  constructor(private http: HttpClient) {
+  }
+
+
+  getCryptoPerformance(crypto: string): Observable<number> {
+
+    if (this.performanceCache.has(crypto)) {
+      return this.performanceCache.get(crypto)!.asObservable();
+    }
+
     const filePath = `${this.mockDataPath}${crypto.toLowerCase()}_prices.csv`;
 
-    return this.http.get(filePath, { responseType: 'text' }).pipe(
-      map((data) => {
+    const performanceSubject = new BehaviorSubject<number>(0);
+    this.http.get(filePath, {responseType: 'text'}).subscribe({
+      next: (data) => {
         const rows = data.split('\n').filter((row) => row.trim() !== '');
         if (rows.length < 2) {
           throw new Error('Not enough data');
@@ -28,11 +38,19 @@ export class SimulationService {
         const lastPrice = parseFloat(lastRow[1]);
 
         if (isNaN(firstPrice) || isNaN(lastPrice)) {
-          throw new Error('Invalid price data');
+          performanceSubject.next(0);
+        } else {
+          const result = Number((((lastPrice - firstPrice) / firstPrice) * 100).toFixed(2));
+          console.log(`Computed ${result} for ${crypto}`);
+          performanceSubject.next(result);
         }
+      },
+      error: () => {
+        performanceSubject.next(0);
+      }
+    });
 
-        return ((lastPrice - firstPrice) / firstPrice) * 100; // Progression en pourcentage
-      })
-    );
+    this.performanceCache.set(crypto, performanceSubject);
+    return performanceSubject.asObservable();
   }
 }

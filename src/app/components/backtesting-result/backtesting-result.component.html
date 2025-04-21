@@ -1,1 +1,25 @@
 <h2>Result of your backtesting</h2>
+
+  <table mat-table [dataSource]="results()" class="mat-elevation-z8">
+
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let allocation"> {{allocation.position}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Crypto name</th>
+      <td mat-cell *matCellDef="let allocation"> {{ allocation.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="performance_percentage">
+      <th mat-header-cell *matHeaderCellDef> Performance (%)</th>
+      <td mat-cell *matCellDef="let allocation"> {{ getCryptoPerformance(allocation.name) | async }} %</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+

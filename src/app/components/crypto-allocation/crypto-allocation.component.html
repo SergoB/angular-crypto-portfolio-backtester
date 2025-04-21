@@ -1,22 +1,24 @@
 <mat-card appearance='outlined' class='allocation-table'>
   <table>
     <thead>
-    <tr class='header-row table-row'>
+    <tr class='table-row header-row'>
       <th>Crypto</th>
       <th>Amount ($)</th>
       <th>Percentage</th>
     </tr>
     </thead>
     <tbody>
-      @for (allocation of allocations; track allocation) {
-        <app-allocation-row [cryptoAllocation]='allocation' [totalAmount]='getTotalAmount()' [allocations]='allocations'></app-allocation-row>
+      @for (allocation of allocations(); track allocation) {
+        <app-allocation-row [cryptoAllocation]='allocation' [totalAmount]='getTotalAmount()' [allocations]='allocations()'></app-allocation-row>
       }
     <tr class='table-row'>
       <td>
         <button (click)='addAllocation()' mat-flat-button>Add allocation</button>
       </td>
       <td></td>
-      <td></td>
+      <td>
+        <button (click)='addAllocation()' mat-stroked-button>Check performances</button>
+      </td>
     </tr>
     </tbody>
     <tfoot>

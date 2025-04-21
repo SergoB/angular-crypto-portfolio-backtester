@@ -18,7 +18,6 @@ import {SimulationService} from "../../services/simulation/simulation.service";
   styleUrl: './search-crypto.component.scss'
 })
 export class SearchCryptoComponent {
-  simulationService : SimulationService = inject(SimulationService);
   cryptoService : CryptoService = inject(CryptoService);
   selectedCrypto: ModelSignal<string> = model('');
   cryptoCtrl= new FormControl(this.selectedCrypto());
@@ -48,9 +47,6 @@ export class SearchCryptoComponent {
 
   onCryptoSelected(value: string) {
     this.selectedCrypto.set(value);
-    this.simulationService.getCryptoProgression(value).subscribe(data => {
-      console.log(`Progress for ${value} was ${data}`)
-    })
   }
 
 
